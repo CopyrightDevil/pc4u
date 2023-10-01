@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration and Login</title>
+    <style>
+        /* Add some basic CSS for styling */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registration</h2>
+        <div id="registrationMessage" style="color: red;"></div>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="regUsername">Username:</label>
+                <input type="text" id="regUsername" name="regUsername" required>
+            </div>
+            <div class="form-group">
+                <label for="regPassword">Password:</label>
+                <input type="password" id="regPassword" name="regPassword" required>
+            </div>
+            <button type="button" onclick="registerMedewerker()">Register</button>
+        </form>
+        <hr>
+        <h2>Login</h2>
+        <div id="loginMessage" style="color: red;"></div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginUsername">Username:</label>
+                <input type="text" id="loginUsername" name="loginUsername" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" name="loginPassword" required>
+            </div>
+            <button type="button" onclick="login()">Login</button>
+        </form>
+    </div>
+
+    <script>
+        function registerMedewerker() {
+            const regUsername = document.getElementById('regUsername').value;
+            const regPassword = document.getElementById('regPassword').value;
+
+            // Generate a unique ID (you can use a more robust method for production)
+            const id = "medewerker"
+
+            // Create a user object
+            const user = {
+                id: id,
+                username: regUsername,
+                password: regPassword
+
+            };
+
+            // Serialize the user object to JSON and store it in localStorage
+            localStorage.setItem(id, JSON.stringify(user));
+            console.log('user is: ', user);
+
+            document.getElementById('registrationMessage').textContent = 'Registration successful!';
+        }
+
+        function login() {
+            const loginUsername = document.getElementById('loginUsername').value;
+            const loginPassword = document.getElementById('loginPassword').value;
+
+            // Find the user by username
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const storedUser = JSON.parse(localStorage.getItem(key));
+                console.log('key', key)
+                console.log('user object: ', storedUser);
+                
+                if (storedUser && storedUser.username === loginUsername && storedUser.password === loginPassword && storedUser.id === 'medewerker') {
+                    window.location.href = 'admin-page.html'
+                }
+
+                if (storedUser && storedUser.username === loginUsername && storedUser.password === loginPassword) {
+                    document.getElementById('loginMessage').textContent = 'Login successful! Redirecting...';
+                    // You can implement redirection here using window.location.href
+                    // For example, window.location.href = 'dashboard.html';
+                    console.log('user object: ', storedUser);
+                    return;
+                }
+            }
+
+            document.getElementById('loginMessage').textContent = 'Invalid username or password.';
+        }
+    </script>
+</body>
+</html>
+

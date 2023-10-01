@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="Assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>AutoScout Login/Registreren</h1>
+    </header>
+    <div class="navbar">
+        <img src="logo.png" alt="logo">
+        <a href="autoscout.html">Home</a>
+        <a href="#huren">Huren</a>
+        <a href="#verhuren">Verhuren</a>
+        <a href="#contact">Contact</a>
+        <a href="inlog-pagina.html">Login/Registreer</a>
+    </div>
+    <h1>Inloggen/Registreren</h1>
+    <div class="container">
+        <h2>Registration</h2>
+        <div id="registrationMessage" style="color: red;"></div>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="regUsername">Username:</label>
+                <input type="text" id="regUsername" name="regUsername" required>
+            </div>
+            <div class="form-group">
+                <label for="regPassword">Password:</label>
+                <input type="password" id="regPassword" name="regPassword" required>
+            </div>
+            <button type="button" onclick="registerKlant()">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function registerKlant() {
+            const regUsername = document.getElementById('regUsername').value;
+            const regPassword = document.getElementById('regPassword').value;
+
+            // Generate a unique ID (you can use a more robust method for production)
+            const id = "klant"
+
+            // Create a user object
+            const user = {
+                id: id,
+                username: regUsername,
+                password: regPassword
+            };
+
+            // Serialize the user object to JSON and store it in localStorage
+            localStorage.setItem(id, JSON.stringify(user));
+
+            document.getElementById('registrationMessage').textContent = 'Registration successful!';
+
+            console.log('user is: ', user);
+            window.location.href = 'autoscout.html'
+        }
+    </script>
+
+</body>
+</html>
